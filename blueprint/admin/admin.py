@@ -17,15 +17,17 @@ def isAdmin(req) -> dict:
 # 操作用户
 @adminApp.route('/reviseuser', methods=['GET'])
 def reviseuser():
-    userId = isAdmin(request)
+    isAdmin(request)
     revisData = request.args
-    setData = []
+    setData = {}
     for i,j in revisData.items():
-        if i not in ['name','pwd', 'email', 'time', 'permissions']:
-            abort(makeResponse(-1, f'参数错误')) 
-        setData.append({i: j})
-
-    usersDb.update_one({'pid':userId}, {'$set': setData})
+        if i not in ['name','pwd', 'email',  'permissions']:
+            continue
+        if j is None or len(j) == 0:
+            continue
+        setData[i] = j
+    
+    usersDb.update_one({'pid':revisData['id']}, {'$set': setData})
     return jsonify({'msg': 'Ok'})
 
 
@@ -33,16 +35,18 @@ def reviseuser():
 def revisevideo():
     isAdmin(request)
     revisData = request.args
-    setData = []
+    setData = {}
     
     for i,j in revisData.items():
         if i == 'userid':
             
             continue
-        if i not in ['name','pwd', 'email', 'time', 'permissions']:
-            abort(makeResponse(-1, f'参数错误')) 
-        setData.append({i: j})
-
+        if i not in ['title','label', 'synopsis']:
+            continue 
+        if j is None or len(j) == 0:
+            continue
+        setData[i] = j
+    videoInfoDb.update_one({'pid':revisData['id']}, {'$set': setData})
     return jsonify({'msg': 'Ok'})
 
 @adminApp.route('/delete', methods=['POST'])
