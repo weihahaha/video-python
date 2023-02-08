@@ -1,4 +1,5 @@
 
+import os
 from flask import Blueprint, abort, request, jsonify, send_from_directory
 
 
@@ -54,15 +55,28 @@ def delete():
     isAdmin(request)
     pid = request.args.get('id')
     types = request.args.get('types')
+    
     if types == 'user':
         usersDb.delete_one({'pid': pid})
         userVideoPperation.delete_one({'pid': pid})
         videoCommentsDb.update_many({{}, {'$unset': {pid: 1}}})
+
     if types == 'video':
+        videoInfo = videoInfoDb.find_one({'pid':pid}, {'pid': 1, "userId": 1})
+        if videoInfo is None:
+            abort(makeResponse(-1, f'无数据'))
+
+        videoId = videoInfo['pid']
+        userId = videoInfo['userId']
+        path = f'{VIDEOPATH}/{userId}/{videoId}'
+        filelist = os.listdir(path)
+        for i in filelist:
+            os.remove(f'{path}/{i}')
+        os.rmdir(path)
         videoInfoDb.delete_one({'pid': pid})
         videoVarietyNumDb.delete_one({'pid': pid})
         videoCommentsDb.delete_one({'pid': pid})
-
+        
     return jsonify({'msg': 'Ok'})
 
 # 发送全部用户或视频

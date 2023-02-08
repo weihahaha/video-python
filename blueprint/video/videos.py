@@ -151,10 +151,17 @@ def deleteVideo():
     userId = isUser(request)['pid']
     data: dict = MapVer(request.get_json(),Bakedin(key='videoid',max=60, required=True))
     
-    videoInfo = videoInfoDb.find_one({'$and': [{'pid': data['videoid']}, {'userId': userId}]})
+    videoInfo = videoInfoDb.find_one({'$and': [{'pid': data['videoid']}, {'userId': userId}]}, {'pid': 1})
     if videoInfo is None:
         abort(makeResponse(-1, f'无权修改'))
 
+    videoId = videoInfo['pid']
+    path = f'{VIDEOPATH}/{userId}/{videoId}'
+    filelist = os.listdir(path)
+    for i in filelist:
+        os.remove(f'{path}/{i}')
+    os.rmdir(path)
+    
     videoInfoDb.delete_one({'pid': data['videoid']})
     videoVarietyNumDb.delete_one({'pid': data['videoid']})
 
