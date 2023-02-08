@@ -6,15 +6,14 @@ from verification.verifications import *
 #smtp =>simple mail transfer protocol  简单邮件传输协议
 import hashlib
 import smtplib   
-
+from configs.config import *
 from email.message import EmailMessage
 import ssl
-import uuid
+
 
 from flask import Request, Response, make_response, request, abort
     
-EMAIL_ADDRESS='3167974057@qq.com'      #发送邮箱地址
-EMAIL_PASSWORD='ccmdzztcktyrddid'      #发送的QQ邮箱SMTP的授权码
+
 
 smtp=smtplib.SMTP('smtp.qq.com',25)
 

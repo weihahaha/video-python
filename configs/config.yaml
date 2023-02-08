@@ -7,3 +7,5 @@ mongo:
    port: 27017
 
 videoPath: ../video
+emailAddress: xxxxxx@xxx.com
+emailPassword: xxxxx

@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 from public.publics import *
 from models.models import *
 from verification.verifications import *
+from configs.config import *
 
 videoApp = Blueprint('videoApp', __name__, url_prefix='/videos')
 
@@ -46,11 +47,11 @@ def uploadVideo():
         if filenameList[-1] != 'mp4':
             abort(makeResponse(-3, '格式错误'))
 
-        path = f'../video/{userId}/{videoId}'
+        path = f'{VIDEOPATH}/{userId}/{videoId}'
         if os.path.exists(path) is False:
             os.makedirs(path)
 
-        url = f'../video/{userId}/{videoId}/{videoId}-{num}.mp4'
+        url = f'{VIDEOPATH}/{userId}/{videoId}/{videoId}-{num}.mp4'
         
         i.save(url)
 
@@ -62,7 +63,7 @@ def uploadVideo():
         num += 1
     
     coverId = uuid.uuid4().hex
-    coverPath = f'../video/{userId}/{videoId}/{coverId}.jpg'
+    coverPath = f'{VIDEOPATH}/{userId}/{videoId}/{coverId}.jpg'
     coverUrl = f'/pub/sendimage?userid={userId}&videoid={videoId}&name={coverId}.jpg'
     cover.save(coverPath)
 
@@ -134,7 +135,7 @@ def modifyVideo():
         data = videoInfo['coverPath'].split('=')
         userId: str = data[1].split('&')[0]
         videoId: str = data[2].split('&')[0]
-        coverPath = f'../video/{userId}/{videoId}/{data[-1]}'
+        coverPath = f'{VIDEOPATH}/{userId}/{videoId}/{data[-1]}'
         cover.save(coverPath)
 
     videoInfoDb.update_one({'pid': videoId}, {'$set': updataInfo})
