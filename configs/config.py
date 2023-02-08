@@ -3,7 +3,7 @@ import yaml
 
 with open(r'configs\\config.yaml', 'r') as f:
     y= yaml.load(f,Loader=yaml.CLoader)
-    print(y)
+    
 
 VIDEOPATH = y['videoPath']
 

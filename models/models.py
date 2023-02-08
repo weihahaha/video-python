@@ -1,5 +1,5 @@
 import pymongo
-
+import gridfs
 from configs.config import *
 
 
@@ -14,6 +14,8 @@ except Exception:
 
 usersDb = client['user-database']['info']
 usersDb.create_index('pid')
+usersIcon = client['user-database']['infoIcon']
+usersIcon.create_index('pid')
 userVideoPperation = client['user-database']['userVideoPperation']
 userVideoPperation.create_index('pid')
 
