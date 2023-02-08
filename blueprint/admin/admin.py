@@ -65,6 +65,7 @@ def delete():
 
     return jsonify({'msg': 'Ok'})
 
+# 发送全部用户或视频
 @adminApp.route('/send', methods=['GET'])
 def send():
     isAdmin(request)
