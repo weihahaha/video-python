@@ -27,7 +27,9 @@ def uploadVideo():
     cover = request.files.get('videoscover') # 视频封面
     if cover is None:
         abort(makeResponse(-1, '参数videoscover为空'))
-
+        
+    if cover.content_length > 1*1024*1024:
+        abort(makeResponse(-1, '图片过大'))
 
     fil = request.files.getlist('videos') # 视频本体
     if fil is None:
