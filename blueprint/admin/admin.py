@@ -34,10 +34,10 @@ def revisevideo():
     isAdmin(request)
     revisData = request.args
     setData = []
-    videoId = None
+    
     for i,j in revisData.items():
         if i == 'userid':
-            videoId = j
+            
             continue
         if i not in ['name','pwd', 'email', 'time', 'permissions']:
             abort(makeResponse(-1, f'参数错误')) 
@@ -66,7 +66,6 @@ def send():
     isAdmin(request)
     types = request.args.get('types')
     
-    limit = int(request.args.get('limit'))
    
     if types == 'user':
         rerp = []
