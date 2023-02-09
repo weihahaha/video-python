@@ -262,7 +262,7 @@ def userMeinfo():
     cursor = videoInfoDb.find({'userId': userId}, {'pid':1})
     for result in cursor.limit(-1):
        videoId.append(result)
-
+    
     data['videoIds'] = videoId
     
     return jsonify({'msg': 'OK', 'data': data})
