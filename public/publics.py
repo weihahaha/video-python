@@ -66,3 +66,10 @@ def isUser(req: Request) -> dict:
     abort(makeResponse(-1, 'Token不正确,无权限'))
   
   return userData
+
+
+def isImage(base: str) -> bool:
+   
+    if base.split(';')[0] in ['data:image/png', 'data:image/jpg', 'data:image/jpge']:
+        return True
+    return False
