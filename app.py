@@ -12,7 +12,10 @@ from blueprint.video.videoFavorites import *
 from blueprint.video.videoComments import *
 from blueprint.admin.admin import *
 from blueprint.pub.pubs import *
+
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 app.register_blueprint(userApp)
 app.register_blueprint(videoApp)
@@ -55,4 +58,5 @@ if __name__ == '__main__':
    \___ \) \/ (( (__( (__  ) _) \___ \\___ \\
    (____/\____/ \___)\___)(____)(____/(____/
    ''')
+   
    server.serve_forever()

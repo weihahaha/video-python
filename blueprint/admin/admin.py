@@ -84,20 +84,33 @@ def delete():
 def send():
     isAdmin(request)
     types = request.args.get('types')
-    
-   
-    if types == 'user':
-        rerp = []
-        # 
-        data = usersDb.find({},{'_id': 0})
-        
-        for result in data.limit(0):
+    revisData = request.args
+    setData = {}
+    setDataList = []
+    for i,j in revisData.items():
+       
+        if i in ['current', 'pageSize', 'types']:
+            continue
+        if j is None or len(j) == 0:
+            continue
+        if i in ['isReview']:
             
-            rerp.append(result)
-        
-        return jsonify({'msg': 'Ok', 'data': rerp}) 
+            isReview = False
+            if j is '1':
+                isReview = True
+            setDataList.append({i: isReview})
+            continue
+        setDataList.append({i: {'$regex': j}})
+    if len(setDataList) != 0:
+        setData = {'$and': setDataList}
+    
+    if types == 'user':
+       
+        data = usersDb.find(setData,{'_id': 0})
+    
+        return jsonify({'msg': 'Ok', 'data': list(data)}) 
     if types == 'video':
         
-        data = videoInfoDb.find({}, {'_id': 0})
+        data = videoInfoDb.find(setData, {'_id': 0})
         
         return jsonify({'msg': 'Ok', 'data': list(data)}) 

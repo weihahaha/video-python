@@ -75,7 +75,7 @@ def login():
     redis_conn.set(infiId, f'{a_str}', 54000)
     usersDb.update_one({'pid': dtas['pid']}, {'$set': {'token': a_str}})
 
-    res = make_response({'msg': 'OK'})
+    res = make_response({'code': 200,'msg': 'OK'})
     res.headers['Authorization'] = a_str
     return res
 
