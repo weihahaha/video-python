@@ -4,11 +4,11 @@ import time
 import uuid
 from bson.objectid import ObjectId
 
-from flask import Blueprint, request, jsonify, make_response
-from public.publics import isImage, isUser, md5_string
+from flask import Blueprint, abort, request, jsonify, make_response
+from public.publics import isImage, isUser, md5_string, makeResponse
 
-from verification.verifications import *
-from models.models import *
+from verification.verifications import MapVer, Bakedin, StrVer
+from models.models import redis_conn, usersDb, userVideoPperation, usersIcon, videoInfoDb
 
 userApp = Blueprint('userApp', __name__, url_prefix='/users')
 

@@ -5,10 +5,10 @@ from flask import Blueprint, abort, request, jsonify, send_from_directory
 from bson.objectid import ObjectId
 
 
-from public.publics import *
-from models.models import *
-from verification.verifications import *
-from configs.config import *
+from public.publics import makeResponse, isUser, getVideoDuration
+from models.models import videoInfoDb, videoVarietyNumDb
+from verification.verifications import StrVer, MapVer, Bakedin
+from configs.config import VIDEOPATH
 
 videoApp = Blueprint('videoApp', __name__, url_prefix='/videos')
 

@@ -1,9 +1,9 @@
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, abort, request, jsonify
 
-from public.publics import *
-from models.models import *
-from verification.verifications import *
+from public.publics import isUser, makeResponse
+from models.models import userVideoPperation, videoVarietyNumDb
+from verification.verifications import StrVer
 
 videoLikesApp = Blueprint('videoLikesApp', __name__, url_prefix='/likes')
 

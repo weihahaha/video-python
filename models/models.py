@@ -1,6 +1,6 @@
 import pymongo
 import gridfs
-from configs.config import *
+from configs.config import MONGOHOST, MONGOPORT, REDISHOST, REDISPORT, REDISDB
 
 
 conn_str = f"mongodb://{MONGOHOST}:{MONGOPORT}/"

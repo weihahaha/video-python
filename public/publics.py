@@ -1,6 +1,5 @@
-from public.publics import *
-from models.models import *
-from verification.verifications import *
+
+from models.models import usersDb
 
 
 #smtp =>simple mail transfer protocol  简单邮件传输协议

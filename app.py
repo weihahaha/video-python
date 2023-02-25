@@ -1,17 +1,18 @@
-from flask import Flask , request
+from flask import Flask, abort , request
 from gevent.pywsgi  import  WSGIServer
 from gevent import monkey
 
 monkey.patch_all()
-from verification.verifications import *
-from models.models import *
-from blueprint.user.users import *
-from blueprint.video.videos import *
-from blueprint.video.videoLikes import *
-from blueprint.video.videoFavorites import *
-from blueprint.video.videoComments import *
-from blueprint.admin.admin import *
-from blueprint.pub.pubs import *
+from public.publics import makeResponse
+from verification.verifications import StrVer
+
+from blueprint.user.users import userApp
+from blueprint.video.videos import videoApp
+from blueprint.video.videoLikes import videoLikesApp
+from blueprint.video.videoFavorites import videoFavoritesApp
+from blueprint.video.videoComments import videoCommentsApp
+from blueprint.admin.admin import adminApp
+from blueprint.pub.pubs import pubApp
 
 from flask_cors import CORS
 app = Flask(__name__)

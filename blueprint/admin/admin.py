@@ -1,11 +1,12 @@
 
 import os
 from flask import Blueprint, abort, request, jsonify, send_from_directory
+from configs.config import VIDEOPATH
 
 
-from public.publics import *
-from models.models import *
-from verification.verifications import *
+from public.publics import isUser, makeResponse
+from models.models import usersDb, videoInfoDb, userVideoPperation, videoCommentsDb, videoVarietyNumDb
+
 
 adminApp = Blueprint('adminApp', __name__, url_prefix='/nmsldeadminhoutaiguanli')
 
